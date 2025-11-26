@@ -1,6 +1,8 @@
 # DAA-2025
  https://atharva-in-bits.github.io/DAA-2025/
 
+ https://chatgpt.com/g/g-p-6926c3c503f08191ab7f044d58293f16-daa-project/project
+
 ✅ 1. Urban Commerce & Consumer Services
 
 This domain includes all businesses that directly serve residents with food, retail, lifestyle, and essential services.
