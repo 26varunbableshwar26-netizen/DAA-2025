@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aroha Nagara – Smart City Simulation</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -22,8 +22,9 @@
     <!-- CITY INFO SECTION -->
     <section id="city-info" class="section">
         <h2>City Information</h2>
+
         <div class="info-grid">
-            <div class="card">
+            <div class="card reveal">
                 <h3>General Info</h3>
                 <ul>
                     <li><strong>City Name:</strong> Aroha Nagara</li>
@@ -35,7 +36,7 @@
                 </ul>
             </div>
 
-            <div class="card">
+            <div class="card reveal">
                 <h3>Population</h3>
                 <ul>
                     <li><strong>Total:</strong> 54,00,000 people</li>
@@ -45,7 +46,7 @@
                 </ul>
             </div>
 
-            <div class="card">
+            <div class="card reveal">
                 <h3>Age Distribution</h3>
                 <ul>
                     <li>1–10 years → 5,40,000</li>
@@ -65,41 +66,48 @@
         <h2>City Layout Plan</h2>
         <p class="center">A planned city with evenly distributed residential, commercial, industrial & green zones.</p>
 
-        <img src="WhatsApp Image 2025-11-26 at 15.29.03_abe9dc89.jpg" class="map" alt="Aroha Nagara Map">
-        <img src="WhatsApp Image 2025-11-26 at 15.29.03_abe9dc89.jpg" class="map" alt="Aroha Nagara Map">
-        <!-- <p class="note">*Upload your map as <strong>city_map.jpg</strong> in the repo*</p> -->
+        <img src="WhatsApp Image 2025-11-26 at 15.29.03_abe9dc89.jpg" class="map reveal" />
+        <img src="WhatsApp Image 2025-11-26 at 15.29.03_abe9dc89.jpg" class="map reveal" />
     </section>
 
     <!-- BUDGET -->
     <section id="budget" class="section">
         <h2>Budget Estimation</h2>
 
-        <div class="table-container">
+        <div class="table-container reveal">
             <table>
-                <tr><th>Sector</th><th>Cost (Lakhs ₹)</th></tr>
-                <tr><td>Residential Area</td><td>4500</td></tr>
-                <tr><td>Transport Infrastructure</td><td>3200</td></tr>
-                <tr><td>Healthcare</td><td>1800</td></tr>
-                <tr><td>Education</td><td>2200</td></tr>
-                <tr><td>Commercial</td><td>2500</td></tr>
-                <tr><td>Recreation & Parks</td><td>950</td></tr>
-                <tr><td><strong>Total</strong></td><td><strong>14,150</strong></td></tr>
+                <thead>
+                    <tr><th>Sector</th><th>Cost (Lakhs ₹)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Residential Area</td><td>4500</td></tr>
+                    <tr><td>Transport Infrastructure</td><td>3200</td></tr>
+                    <tr><td>Healthcare</td><td>1800</td></tr>
+                    <tr><td>Education</td><td>2200</td></tr>
+                    <tr><td>Commercial</td><td>2500</td></tr>
+                    <tr><td>Recreation & Parks</td><td>950</td></tr>
+                    <tr><td><strong>Total</strong></td><td><strong>14,150</strong></td></tr>
+                </tbody>
             </table>
         </div>
     </section>
 
-    <!-- REVENUE MODEL -->
+    <!-- REVENUE -->
     <section id="revenue" class="section">
         <h2>Revenue Model</h2>
 
-        <div class="table-container">
+        <div class="table-container reveal">
             <table>
-                <tr><th>Source</th><th>Annual Revenue (₹ Lakhs)</th></tr>
-                <tr><td>Property Tax</td><td>350</td></tr>
-                <tr><td>Commercial Rentals</td><td>420</td></tr>
-                <tr><td>Tourism</td><td>280</td></tr>
-                <tr><td>Transport Fees</td><td>160</td></tr>
-                <tr><td><strong>Total</strong></td><td><strong>1210</strong></td></tr>
+                <thead>
+                    <tr><th>Source</th><th>Annual Revenue (₹ Lakhs)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Property Tax</td><td>350</td></tr>
+                    <tr><td>Commercial Rentals</td><td>420</td></tr>
+                    <tr><td>Tourism</td><td>280</td></tr>
+                    <tr><td>Transport Fees</td><td>160</td></tr>
+                    <tr><td><strong>Total</strong></td><td><strong>1210</strong></td></tr>
+                </tbody>
             </table>
         </div>
     </section>
@@ -107,18 +115,19 @@
     <!-- CHALLENGES -->
     <section class="section">
         <h2>Challenges & Constructive Measures</h2>
+
         <div class="accordion">
-            <div class="acc-item">
+            <div class="acc-item reveal">
                 <h3>1. Water Distribution</h3>
                 <p>Balanced reservoir mapping & optimized pipeline routing.</p>
             </div>
 
-            <div class="acc-item">
+            <div class="acc-item reveal">
                 <h3>2. Traffic Congestion</h3>
                 <p>Graph-based routing, shortest path optimization, peak-hour scheduling.</p>
             </div>
 
-            <div class="acc-item">
+            <div class="acc-item reveal">
                 <h3>3. Waste Management</h3>
                 <p>Cluster-based pickup zones, AVL-tree priority scheduling.</p>
             </div>
@@ -130,16 +139,46 @@
         <h2>Team Members</h2>
 
         <div class="team-grid">
-            <div class="team-card">Shashank R. Yende – 245</div>
-            <div class="team-card">Atharva – 264</div>
-            <div class="team-card">Vinay Hosur – 265</div>
-            <div class="team-card">Varun B – 233</div>
+            <div class="team-card reveal">Shashank R. Yende – 245</div>
+            <div class="team-card reveal">Atharva – 264</div>
+            <div class="team-card reveal">Vinay Hosur – 265</div>
+            <div class="team-card reveal">Varun B – 233</div>
         </div>
     </section>
 
     <footer>
         <p>© 2025 Aroha Nagara Project | Built for DAA Course</p>
     </footer>
+
+    <!-- JS: Scroll reveal + accordion -->
+    <script>
+        (function(){
+            const obsOpts = { threshold: 0.1 };
+            const revealObs = new IntersectionObserver((entries, ob) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add("in-view");
+                        ob.unobserve(e.target);
+
+                        // table anim
+                        const tb = e.target.querySelector("tbody");
+                        if (tb) tb.classList.add("in-view");
+                    }
+                });
+            }, obsOpts);
+
+            document.querySelectorAll(".reveal, .table-container").forEach(el => revealObs.observe(el));
+
+            // Accordion
+            document.querySelectorAll(".acc-item").forEach(item => {
+                const title = item.querySelector("h3");
+                title.innerHTML += `<span class="chev">▾</span>`;
+                item.addEventListener("click", () => {
+                    item.classList.toggle("open");
+                });
+            });
+        })();
+    </script>
 
 </body>
 </html>
