@@ -1,0 +1,123 @@
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: #fafafa;
+    color: #222;
+}
+
+/* Hero Section */
+.hero {
+    height: 70vh;
+    background: url('city_map.jpg') center/cover no-repeat;
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.55);
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+
+.btn {
+    padding: 12px 22px;
+    background: white;
+    color: black;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Sections */
+.section {
+    padding: 60px 10%;
+}
+
+.section h2 {
+    font-size: 2.4rem;
+    border-left: 7px solid #3a6ea5;
+    padding-left: 15px;
+}
+
+/* Cards */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+.card ul li {
+    margin: 8px 0;
+}
+
+/* Map */
+.map {
+    width: 70%;
+    margin: 20px auto;
+    display: block;
+    border: 5px solid #ddd;
+    border-radius: 10px;
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 2px solid #333;
+    padding: 12px;
+    text-align: center;
+}
+
+/* Team */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.team-card {
+    padding: 20px;
+    background: #e9f3ff;
+    border-left: 6px solid #3a6ea5;
+    border-radius: 5px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    background: #222;
+    color: white;
+    text-align: center;
+}
