@@ -1,20 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Aroha Nagara – Smart City Simulation</title>
+    <meta charset="UTF-8">
+    <title>Aroha Nagara – Smart City Project</title>
 
-    <!-- IMPORTANT: FIXED CSS PATH -->
+    <!-- FIXED CSS PATH -->
     <link rel="stylesheet" href="/DAA-2025/style.css">
+
+    <style>
+        /* EXTRA HOMEPAGE-ONLY PREMIUM STYLING */
+        
+        .hero-premium {
+            height: 100vh;
+            background: linear-gradient(135deg,#14b8ff,#4dc9ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 10%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            animation: fadeDown 1.2s ease;
+        }
+
+        .hero-sub {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            opacity: 0.92;
+            animation: fade 2s ease;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            animation: fadeUp 1.3s ease;
+        }
+
+        .btn-premium {
+            padding: 14px 30px;
+            background: #ff7b29;
+            font-size: 1.15rem;
+            color: white;
+            font-weight: 600;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+
+        .btn-premium:hover {
+            background: #ff5500;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 25px;
+            font-size: 1.1rem;
+            color: white;
+            opacity: 0.8;
+            animation: bounce 2s infinite;
+        }
+
+        /* Floating Glass Navbar */
+        .navbar {
+            backdrop-filter: blur(12px);
+            background: rgba(255,255,255,0.18);
+            padding: 14px 7%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.25);
+        }
+
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .nav-links li a {
+            color: white;
+        }
+
+        .nav-links li a:hover {
+            color: #ff7b29;
+        }
+
+        /* Animations */
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+    </style>
+
 </head>
 
 <body>
 
 <!-- NAVBAR -->
 <nav class="navbar">
-    <div class="logo">CITY DESIGN</div>
+    <div class="logo">Aroha Nagara</div>
     <ul class="nav-links">
         <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="about.html">About</a></li>
         <li><a href="project.html">Project</a></li>
         <li><a href="algorithms.html">Algorithms</a></li>
         <li><a href="team.html">Team</a></li>
@@ -22,22 +137,24 @@
     </ul>
 </nav>
 
-<!-- FIXED HERO SECTION -->
-<header class="hero" style="
-    background: linear-gradient(to right, rgba(20,184,255,.7), rgba(77,201,255,.7)),
-                url('city_map.jpg') center/cover no-repeat;
-">
-    <div class="overlay"></div>
-    <div class="hero-content">
-        <h1>Aroha Nagara</h1>
-        <p>A Data Structures & Algorithms Based Smart City Model</p>
-        <a href="project.html" class="btn">Explore Project</a>
-    </div>
-</header>
+<!-- ULTRA-PREMIUM HERO -->
+<section class="hero-premium">
 
-<footer>
-    <p>© 2025 Aroha Nagara – All Rights Reserved</p>
-</footer>
+    <div>
+        <h1 class="hero-title">Aroha Nagara</h1>
+        <p class="hero-sub">A Smart City Designed Using Advanced Algorithms & Data Structures</p>
+
+        <div class="hero-buttons">
+            <a href="project.html" class="btn-premium">Explore Project</a>
+            <a href="algorithms.html" class="btn-premium" style="background:#ffffff;color:#004c8c;">
+                Algorithms Used
+            </a>
+        </div>
+    </div>
+
+    <div class="scroll-down">▼ Scroll to Learn More</div>
+
+</section>
 
 </body>
 </html>
