@@ -9,7 +9,9 @@
 
 <body>
 
-<!-- NAVBAR -->
+<!-- ===============================
+     NAVBAR
+================================== -->
 <nav class="navbar">
     <div class="logo">Arohanagara</div>
     <ul class="nav-links">
@@ -22,16 +24,19 @@
     </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero-premium">
-    <div>
-        <h1 class="hero-title">Arohanagara</h1>
-        <p class="hero-sub">A Data Structures & Algorithms Based Smart City Model</p>
+<!-- ===============================
+     HERO SECTION (WITH ANIMATIONS)
+================================== -->
+<section class="hero-premium animated-hero">
+    <div class="hero-inner">
+        <h1 class="hero-title reveal-hero">Arohanagara</h1>
+        <p class="hero-sub reveal-hero delay-1">A Data Structures & Algorithms Based Smart City Model</p>
+        <div class="hero-glow"></div>
     </div>
 </section>
 
 <!-- ===============================
-     OVERVIEW (NEW + HUMANIZED)
+     OVERVIEW
 ================================== -->
 <section id="overview" class="page-section">
     <h2>Overview</h2>
@@ -42,32 +47,29 @@
             and algorithms can support the design of a modern city. Instead of looking 
             at DAA only as a theoretical subject, we wanted to explore how concepts 
             like graphs, shortest path algorithms, trees, and optimization techniques 
-            connect to real-world planning.  
+            connect to real-world planning.
         </p>
 
         <p>
-            Throughout this course, we studied how different data structures evolve 
-            based on the kind of problems they solve. This helped us recognize that 
-            city planning is, in many ways, a large-scale data problem — roads behave 
-            like weighted graphs, zoning can be represented in hierarchical structures, 
-            and resource management often relies on efficient searching and balancing 
-            algorithms.  
+            Over the course of the semester, we learned how different data structures 
+            evolve depending on the nature of a problem. This helped us realize that city 
+            planning behaves like a large data system — roads resemble weighted graphs, 
+            zoning can be mapped as hierarchical structures, and distribution networks 
+            require efficient searching and balancing algorithms.
         </p>
 
         <p>
-            Our objective was not only to design a hypothetical smart city but to 
-            present a structured model that shows how algorithmic thinking improves 
-            decision-making. Whether it is deciding the best route between zones, 
-            distributing utilities, or estimating budgets, each part of the city 
-            benefits from a well-chosen algorithm. Arohanagara is therefore a 
-            demonstration of how classroom concepts can be meaningfully connected 
-            to real planning challenges.
+            Our goal was not just to design a hypothetical smart city, but to present a 
+            structured model demonstrating how algorithmic thinking improves decision-making. 
+            Whether it involves choosing optimal routes, allocating resources, or estimating 
+            costs, each component benefits from the right data structure. Arohanagara reflects 
+            how classroom concepts can meaningfully connect to practical planning challenges.
         </p>
     </div>
 </section>
 
 <!-- ===============================
-     CITY INFO
+     CITY INFORMATION
 ================================== -->
 <section id="city-info" class="page-section">
     <h2>City Information</h2>
@@ -115,17 +117,17 @@
 ================================== -->
 <section id="layout" class="page-section">
     <h2>City Layout Plan</h2>
-    <p style="opacity:0.9; margin-bottom:20px;">
-        A balanced distribution of residential, commercial, industrial, and green zones 
-        to ensure sustainable growth.
+    <p style="opacity:0.85; margin-bottom:20px;">
+        A balanced distribution of residential, commercial, industrial, and 
+        environmental zones to promote sustainable urban growth.
     </p>
 
-    <img src="WhatsApp Image 2025-11-26 at 15.29.03_abe9dc89.jpg" class="map reveal" />
-    <img src="WhatsApp Image 2025-11-26 at 14.26.56_7cdcadd2.jpg" class="map reveal" />
+    <img src="WhatsApp Image 2025-11-26 at 15.29.03_abe9dc89.jpg" class="map reveal">
+    <img src="WhatsApp Image 2025-11-26 at 14.26.56_7cdcadd2.jpg" class="map reveal">
 </section>
 
 <!-- ===============================
-     BUDGET
+     BUDGET TABLE
 ================================== -->
 <section id="budget" class="page-section">
     <h2>Budget Estimation</h2>
@@ -147,7 +149,7 @@
                 <tr><td>Agriculture & Green Zones</td><td>150</td><td>22,500</td></tr>
                 <tr><td>Health & Education</td><td>350</td><td>28,350</td></tr>
                 <tr><td>Commercial Sector</td><td>450</td><td>40,500</td></tr>
-                <tr><td>Drainage & Waste Management</td><td>350</td><td>26,250</td></tr>
+                <tr><td>Waste Management</td><td>350</td><td>26,250</td></tr>
                 <tr><td>Tech Park & Data Centres</td><td>500</td><td>49,500</td></tr>
                 <tr class="total"><td><strong>Total</strong></td><td></td><td><strong>4,88,100</strong></td></tr>
             </tbody>
@@ -156,7 +158,7 @@
 </section>
 
 <!-- ===============================
-     REVENUE
+     REVENUE MODEL
 ================================== -->
 <section id="revenue" class="page-section">
     <h2>Revenue Model</h2>
@@ -164,7 +166,10 @@
     <div class="table-container reveal">
         <table>
             <thead>
-                <tr><th>Source</th><th>Annual Revenue (₹ Crore)</th></tr>
+                <tr>
+                    <th>Source</th>
+                    <th>Annual Revenue (₹ Crore)</th>
+                </tr>
             </thead>
             <tbody>
                 <tr><td>Renewable Energy Exports</td><td>7,800</td></tr>
@@ -203,22 +208,15 @@
     <p>© 2025 Arohanagara Project | Built for DAA Course</p>
 </footer>
 
-
-<!-- Scroll reveal + accordion JS -->
+<!-- ===============================
+     HERO JS ANIMATION
+================================== -->
 <script>
-    (function(){
-        const obsOpts = { threshold: 0.12 };
-        const revealObs = new IntersectionObserver((entries, ob) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.classList.add("in-view");
-                    ob.unobserve(e.target);
-                }
-            });
-        }, obsOpts);
-
-        document.querySelectorAll(".reveal, .table-container").forEach(el => revealObs.observe(el));
-    })();
+window.addEventListener("load", () => {
+    document.querySelectorAll(".reveal-hero").forEach(el => {
+        el.classList.add("active");
+    });
+});
 </script>
 
 </body>
