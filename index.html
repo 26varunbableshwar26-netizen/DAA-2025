@@ -10,22 +10,7 @@
 <body>
 
 <!-- ===============================
-     NAVBAR
-================================== -->
-<nav class="navbar">
-    <div class="logo">Arohanagara</div>
-    <ul class="nav-links">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="#city-info">City Info</a></li>
-        <li><a href="#layout">Layout</a></li>
-        <li><a href="#budget">Budget</a></li>
-        <li><a href="#revenue">Revenue</a></li>
-        <li><a href="#team">Team</a></li>
-    </ul>
-</nav>
-
-<!-- ===============================
-     HERO SECTION (WITH ANIMATIONS)
+     HERO SECTION (NO NAVBAR)
 ================================== -->
 <section class="hero-premium animated-hero">
     <div class="hero-inner">
@@ -43,27 +28,22 @@
 
     <div class="content-card">
         <p>
-            The “Arohanagara” project is our attempt to understand how data structures 
-            and algorithms can support the design of a modern city. Instead of looking 
-            at DAA only as a theoretical subject, we wanted to explore how concepts 
-            like graphs, shortest path algorithms, trees, and optimization techniques 
-            connect to real-world planning.
+            The “Arohanagara” project explores how data structures and algorithms can support 
+            the design of a modern, sustainable smart city. Rather than treating DAA as purely 
+            theoretical, we analysed how graph theory, pathfinding, pattern searching, and 
+            hierarchical structures influence real-world decisions.
         </p>
 
         <p>
-            Over the course of the semester, we learned how different data structures 
-            evolve depending on the nature of a problem. This helped us realize that city 
-            planning behaves like a large data system — roads resemble weighted graphs, 
-            zoning can be mapped as hierarchical structures, and distribution networks 
-            require efficient searching and balancing algorithms.
+            Through the semester, we realised that city planning is essentially a data problem. 
+            Roads resemble weighted graphs, zoning behaves like tree structures, and resource 
+            distribution depends heavily on efficient searching and optimization methods.
         </p>
 
         <p>
-            Our goal was not just to design a hypothetical smart city, but to present a 
-            structured model demonstrating how algorithmic thinking improves decision-making. 
-            Whether it involves choosing optimal routes, allocating resources, or estimating 
-            costs, each component benefits from the right data structure. Arohanagara reflects 
-            how classroom concepts can meaningfully connect to practical planning challenges.
+            Our model demonstrates how algorithmic thinking improves urban design—optimizing 
+            routes, predicting hazards, allocating resources, and reducing costs. Arohanagara 
+            represents the practical translation of classroom concepts into real-world planning.
         </p>
     </div>
 </section>
@@ -117,7 +97,7 @@
 ================================== -->
 <section id="layout" class="page-section">
     <h2>City Layout Plan</h2>
-    <p style="opacity:0.85; margin-bottom:20px;">
+    <p class="center-text">
         A balanced distribution of residential, commercial, industrial, and 
         environmental zones to promote sustainable urban growth.
     </p>
@@ -127,7 +107,7 @@
 </section>
 
 <!-- ===============================
-     BUDGET TABLE
+     BUDGET
 ================================== -->
 <section id="budget" class="page-section">
     <h2>Budget Estimation</h2>
@@ -158,7 +138,7 @@
 </section>
 
 <!-- ===============================
-     REVENUE MODEL
+     REVENUE
 ================================== -->
 <section id="revenue" class="page-section">
     <h2>Revenue Model</h2>
@@ -166,21 +146,18 @@
     <div class="table-container reveal">
         <table>
             <thead>
-                <tr>
-                    <th>Source</th>
-                    <th>Annual Revenue (₹ Crore)</th>
-                </tr>
+                <tr><th>Source</th><th>Annual Revenue (₹ Crore)</th></tr>
             </thead>
             <tbody>
                 <tr><td>Renewable Energy Exports</td><td>7,800</td></tr>
                 <tr><td>Green Hydrogen</td><td>5,400</td></tr>
                 <tr><td>Environmental Fees</td><td>600</td></tr>
                 <tr><td>Industrial Leases</td><td>8,200</td></tr>
-                <tr><td>Tech & Commercial Services</td><td>8,000</td></tr>
+                <tr><td>Tech Services</td><td>8,000</td></tr>
                 <tr><td>Property Tax</td><td>5,200</td></tr>
-                <tr><td>Utilities & User Fees</td><td>2,800</td></tr>
-                <tr><td>Tourism & Hospitality</td><td>4,800</td></tr>
-                <tr><td>Hotel / Tourism Tax</td><td>1,600</td></tr>
+                <tr><td>Utilities</td><td>2,800</td></tr>
+                <tr><td>Tourism</td><td>4,800</td></tr>
+                <tr><td>Hotel Tax</td><td>1,600</td></tr>
                 <tr><td><strong>Total Annual Revenue</strong></td><td><strong>44,400</strong></td></tr>
             </tbody>
         </table>
@@ -202,6 +179,31 @@
 </section>
 
 <!-- ===============================
+     BUSINESS CASE STUDIES SECTION
+================================== -->
+<section id="bcs" class="page-section">
+    <h2>Business Case Studies</h2>
+
+    <div class="content-card">
+        <p>Select a team member to view their business case study contribution:</p>
+
+        <ul class="bcs-list">
+            <li>Shashank R. Yende</li>
+            <li><a href="athbcs.html" class="bcs-link">Atharva (DSA Case Studies)</a></li>
+            <li>Vinay Hosur</li>
+            <li>Varun B</li>
+        </ul>
+    </div>
+
+    <div class="github-box">
+        <a href="https://github.com/atharva-in-bits/DAA-2025" target="_blank" class="github-btn">
+            View Complete Project on GitHub
+        </a>
+    </div>
+
+</section>
+
+<!-- ===============================
      FOOTER
 ================================== -->
 <footer>
@@ -209,7 +211,7 @@
 </footer>
 
 <!-- ===============================
-     HERO JS ANIMATION
+     HERO ANIMATION JS
 ================================== -->
 <script>
 window.addEventListener("load", () => {
