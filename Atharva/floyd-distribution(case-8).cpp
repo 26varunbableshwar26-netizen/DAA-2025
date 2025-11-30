@@ -1,6 +1,3 @@
-// File: Atharva/floyd-distribution(case-8).cpp
-// Compile: g++ -std=c++17 -O2 floyd-distribution(case-8).cpp -o floyd_distribution
-
 #include <bits/stdc++.h>
 using namespace std;
 
