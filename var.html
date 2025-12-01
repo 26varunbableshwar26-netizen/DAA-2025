@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Algorithmic Sustainability Case Studies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* -------------- Base Reset -------------- */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #050816;
+      --bg-alt: rgba(15, 23, 42, 0.85);
+      --bg-card: rgba(15, 23, 42, 0.9);
+      --bg-chip: rgba(148, 163, 184, 0.15);
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.16);
+      --accent-strong: #0ea5e9;
+      --border-subtle: rgba(148, 163, 184, 0.3);
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.8);
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --transition-fast: 160ms ease-out;
+      --transition-med: 220ms ease-out;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    }
+
+    body.theme-light {
+      --bg: #f1f5f9;
+      --bg-alt: rgba(255, 255, 255, 0.9);
+      --bg-card: rgba(255, 255, 255, 0.98);
+      --bg-chip: rgba(15, 23, 42, 0.06);
+      --text: #020617;
+      --text-muted: #475569;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.16);
+      --accent-strong: #1d4ed8;
+      --border-subtle: rgba(148, 163, 184, 0.5);
+      --shadow-soft: 0 16px 35px rgba(15, 23, 42, 0.15);
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top left, #0f172a 0, #020617 40%, #000 100%);
+      color: var(--text);
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    /* -------------- Background FX -------------- */
+    .orb {
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 999px;
+      filter: blur(90px);
+      opacity: 0.32;
+      z-index: -2;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    .orb--blue {
+      top: -80px;
+      left: -40px;
+      background: #22d3ee;
+    }
+    .orb--violet {
+      bottom: -120px;
+      right: -60px;
+      background: #a855f7;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1200px;
+      background: linear-gradient(
+          135deg,
+          rgba(148, 163, 184, 0.12),
+          rgba(15, 23, 42, 0.9)
+        ),
+        radial-gradient(circle at top, rgba(56, 189, 248, 0.18), transparent 55%);
+      border-radius: 26px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 26px 80px rgba(15, 23, 42, 0.9);
+      padding: 26px 26px 30px;
+      backdrop-filter: blur(26px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* -------------- Header -------------- */
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .title-block {
+      max-width: 560px;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-strong);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.8);
+    }
+
+    .title-block h1 {
+      font-size: clamp(1.9rem, 2.4vw, 2.4rem);
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.92rem;
+      max-width: 520px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* -------------- Header Controls -------------- */
+    .header-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      min-width: 220px;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      user-select: none;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95));
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.6);
+      transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast);
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.6);
+      border-color: var(--accent);
+    }
+
+    .theme-toggle-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fbbf24, #f97316);
+      position: relative;
+      overflow: hidden;
+    }
+    body.theme-light .theme-toggle-icon::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle at 30% 30%, #facc15, #f97316);
+    }
+    body.theme-light .theme-toggle-icon {
+      box-shadow: 0 0 16px rgba(250, 204, 21, 0.9);
+    }
+
+    .theme-toggle span {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      backdrop-filter: blur(12px);
+      font-weight: 500;
+    }
+
+    /* -------------- Search + Algo Filters -------------- */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 12px 0 20px;
+      align-items: center;
+    }
+
+    .search-wrapper {
+      flex: 1 1 240px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 12px 10px 32px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.94), rgba(15, 23, 42, 0.98));
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.55);
+      transition: border-color var(--transition-med), box-shadow var(--transition-med),
+        background var(--transition-med), transform var(--transition-med);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 16px 40px rgba(56, 189, 248, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9rem;
+      color: var(--accent);
+      pointer-events: none;
+    }
+
+    .algo-pills {
+      flex: 2 1 280px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background var(--transition-fast), color var(--transition-fast),
+        border-color var(--transition-fast), transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .pill:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.8);
+      border-color: var(--accent);
+    }
+
+    .pill.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      border-color: transparent;
+      color: #e0f2fe;
+      box-shadow: 0 8px 26px rgba(37, 99, 235, 0.7);
+    }
+
+    /* -------------- Card Layout -------------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-top: 6px;
+    }
+
+    .case-card {
+      position: relative;
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.98));
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      box-shadow: var(--shadow-soft);
+      padding: 16px 16px 14px;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      transform: translateY(18px) scale(0.98);
+      opacity: 0;
+      transition: transform 420ms cubic-bezier(0.22, 0.55, 0.25, 0.99),
+        opacity 420ms ease-out, box-shadow var(--transition-med),
+        border-color var(--transition-med), background var(--transition-med);
+      cursor: default;
+    }
+
+    .case-card.visible {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .case-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: conic-gradient(
+        from 220deg,
+        transparent 0 35%,
+        rgba(56, 189, 248, 0.35),
+        rgba(56, 189, 248, 0.1),
+        transparent 65% 100%
+      );
+      opacity: 0;
+      transition: opacity 260ms ease-out;
+      pointer-events: none;
+    }
+
+    .case-card:hover::before {
+      opacity: 1;
+    }
+
+    .case-card:hover {
+      box-shadow: 0 26px 65px rgba(15, 23, 42, 0.95);
+      border-color: rgba(56, 189, 248, 0.55);
+    }
+
+    .case-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .case-label {
+      font-size: 0.72rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .case-label-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .case-domain {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+    }
+
+    .case-title {
+      font-size: 1.02rem;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .case-desc {
+      font-size: 0.86rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+      max-height: 140px;
+      overflow: hidden;
+      mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    }
+
+    .case-desc.expanded {
+      max-height: none;
+      mask-image: none;
+    }
+
+    .more-toggle {
+      font-size: 0.76rem;
+      color: var(--accent);
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .more-toggle-icon {
+      font-size: 0.82rem;
+      transition: transform var(--transition-fast);
+    }
+
+    .more-toggle.expanded .more-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .algo-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .algo-chip {
+      font-size: 0.7rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--bg-chip);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .algo-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      opacity: 0.75;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .complexity {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .tagline {
+      font-size: 0.76rem;
+      color: var(--accent-strong);
+      font-weight: 500;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      background: rgba(15, 23, 42, 0.94);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: background var(--transition-fast), color var(--transition-fast),
+        border-color var(--transition-fast), transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      border-color: transparent;
+      color: #e0f2fe;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.8);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 38px rgba(37, 99, 235, 0.9);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.85);
+    }
+
+    .btn-icon {
+      font-size: 0.92rem;
+    }
+
+    .pill-reset {
+      font-weight: 500;
+    }
+
+    /* -------------- Empty State -------------- */
+    .empty-state {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      display: none;
+    }
+
+    .empty-state strong {
+      color: var(--accent-strong);
+    }
+
+    /* -------------- Responsive -------------- */
+    @media (max-width: 720px) {
+      body {
+        padding: 12px;
+      }
+      .page {
+        padding: 18px 16px 20px;
+        border-radius: 20px;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header-controls {
+        align-items: flex-start;
+      }
+      .algo-pills {
+        justify-content: flex-start;
+      }
+      .card-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .btn-row {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb--blue"></div>
+  <div class="orb orb--violet"></div>
+
+  <div class="page">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="title-block">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          <span>Algorithmic Sustainability · Case Studies</span>
+        </div>
+        <h1>Environment & Infrastructure — DS & Algo Powered Solutions</h1>
+        <p class="subtitle">
+          A curated set of real-world systems built using graphs, trees, greedy strategies,
+          clustering and string algorithms — optimized for performance, resilience and
+          large-scale deployment.
+        </p>
+      </div>
+
+      <div class="header-controls">
+        <button class="theme-toggle" id="themeToggle">
+          <div class="theme-toggle-icon"></div>
+          <span id="themeLabel">Dark mode · On</span>
+        </button>
+        <span class="badge">10 case studies · 20+ algorithms</span>
+      </div>
+    </header>
+
+    <!-- TOOLBAR -->
+    <section class="toolbar">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input
+          id="searchInput"
+          class="search-input"
+          type="text"
+          placeholder="Search by domain, algorithm, or keywords (e.g. Dijkstra, microgrid, TSP)..."
+        />
+      </div>
+
+      <div class="algo-pills">
+        <button class="pill pill-reset active" data-filter="all">All</button>
+        <button class="pill" data-filter="graph">Graph</button>
+        <button class="pill" data-filter="tree">Tree / Fenwick</button>
+        <button class="pill" data-filter="greedy">Greedy</button>
+        <button class="pill" data-filter="clustering">Clustering</button>
+        <button class="pill" data-filter="string">String / KMP</button>
+      </div>
+    </section>
+
+    <!-- CASE GRID -->
+    <main class="grid" id="caseGrid">
+      <!-- CASE 1 -->
+      <article
+        class="case-card"
+        data-domain="Renewable Energy Installation & Maintenance"
+        data-tags="graph,mst,dijkstra,bfs,dfs,sorting,energy,grid,renewable"
+        data-groups="graph"
+      >
+        <div class="case-meta">
+          <div class="case-label">
+            <span class="case-label-bullet"></span> Case 1
+          </div>
+          <div class="case-domain">Renewable Energy · Smart Grids</div>
+        </div>
+        <h2 class="case-title">Renewable Energy Installation & Maintenance</h2>
+        <p class="case-desc">
+          Smart renewable networks require selecting optimal panel/turbine placements,
+          minimizing cabling cost, and routing electricity with minimal loss. Each building/
+          energy node is modeled as a weighted graph where edges reflect cable distance and
+          installation cost. To create a cost-efficient physical grid, minimum spanning tree
+          construction ensures the system connects all nodes with minimum wiring. After
+          installation, energy routing requires computing shortest-loss paths between consumers
+          and generation nodes to maintain balanced loads. Failure conditions require
+          recalculating paths with minimal downtime while still respecting constraints.
+          Historical data and demand fluctuations influence dynamic re-optimization at fixed
+          intervals. System-level efficiency depends on the ability to recompute updates in
+          sublinear or logarithmic time across large networks. The combination of structural
+          optimization and runtime path recalculation ensures a scalable, resilient energy grid.
+        </p>
+        <button class="more-toggle">
+          Expand details <span class="more-toggle-icon">▾</span>
+        </button>
+        <div class="algo-chip-row">
+          <span class="algo-chip"><span class="algo-dot"></span> Kruskal MST</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Prim MST</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Dijkstra</span>
+          <span class="algo-chip"><span class="algo-dot"></span> BFS / DFS</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Sorting</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-footer-left">
+            <span class="complexity">Graph modeling · O(E log V) core routines</span>
+            <span class="tagline">Resilient, cost-efficient smart energy grids.</span>
+          </div>
+          <div class="btn-row">
+            <a href="#case1-code" class="btn btn-primary">
+              <span class="btn-icon">🧠</span> View Code
+            </a>
+            <button class="btn btn-secondary">
+              <span class="btn-icon">📊</span> System Flow
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 2 -->
+      <article
+        class="case-card"
+        data-domain="Electric Vehicle Charging, Rental & Repair Network"
+        data-tags="graph,mst,dijkstra,bfs,dfs,priority,sorting,ev,charging"
+        data-groups="graph"
+      >
+        <div class="case-meta">
+          <div class="case-label">
+            <span class="case-label-bullet"></span> Case 2
+          </div>
+          <div class="case-domain">EV Charging · Rental & Repair</div>
+        </div>
+        <h2 class="case-title">Electric Vehicle Charging, Rental & Repair Network</h2>
+        <p class="case-desc">
+          EV infrastructure demands optimal charging station placement, low-cost installation,
+          and fast routing of vehicles to the nearest available charging node. The system
+          represents city roads as weighted graphs, with weights reflecting travel time, energy
+          consumption, or dynamic congestion. Shortest-path computations ensure drivers always
+          reach the lowest-cost station under varying traffic conditions. Charging station loads
+          must be continuously evaluated to avoid bottlenecks, requiring repeated low-latency
+          graph queries. Installation planning uses global optimization to minimize wiring cost,
+          battery transport cost, and inter-station distance. When failures occur, reachability
+          and redundancy metrics ensure drivers still have alternative stations. Load
+          forecasting, assignment decisions, and dynamic station ranking use sorted data
+          structures for priority operations. Efficiency comes from fast recomputation and low
+          memory overhead in large networks.
+        </p>
+        <button class="more-toggle">
+          Expand details <span class="more-toggle-icon">▾</span>
+        </button>
+        <div class="algo-chip-row">
+          <span class="algo-chip"><span class="algo-dot"></span> Kruskal / Prim MST</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Dijkstra</span>
+          <span class="algo-chip"><span class="algo-dot"></span> BFS / DFS</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Priority Queue</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Sorting</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-footer-left">
+            <span class="complexity">Multi-source routing · Priority dispatch</span>
+            <span class="tagline">Always-on, congestion-aware EV mobility.</span>
+          </div>
+          <div class="btn-row">
+            <a href="#case2-code" class="btn btn-primary">
+              <span class="btn-icon">🧠</span> View Code
+            </a>
+            <button class="btn btn-secondary">
+              <span class="btn-icon">🚗</span> Network View
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 3 -->
+      <article
+        class="case-card"
+        data-domain="Waste Collection & Recycling Optimization"
+        data-tags="tsp,clustering,kmeans,2opt,dijkstra,capacity,routing"
+        data-groups="graph clustering"
+      >
+        <div class="case-meta">
+          <div class="case-label">
+            <span class="case-label-bullet"></span> Case 3
+          </div>
+          <div class="case-domain">Urban Waste · Recycling</div>
+        </div>
+        <h2 class="case-title">Waste Collection & Recycling Optimization</h2>
+        <p class="case-desc">
+          Urban waste systems require efficient vehicle routing, cluster formation, and
+          capacity-aware collection planning. Each pickup point is represented as a node with
+          weights reflecting waste volume, distance, and collection urgency. Clustering methods
+          group nearby nodes into service regions, reducing cross-region travel overhead. Within
+          each region, a near-optimal route is produced using heuristic TSP approximations,
+          refined using local search techniques. Capacity constraints split routes into feasible
+          sub-tours for trucks with limited storage. Anomaly conditions — such as full bins or
+          route blockages — require recalculating reachable paths with updated weights.
+          Efficiency is governed by O(E log V) distance computations and near-linear heuristic
+          optimization. The framework supports real-time replanning as road conditions and waste
+          levels change.
+        </p>
+        <button class="more-toggle">
+          Expand details <span class="more-toggle-icon">▾</span>
+        </button>
+        <div class="algo-chip-row">
+          <span class="algo-chip"><span class="algo-dot"></span> K-means clustering</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Nearest Neighbour TSP</span>
+          <span class="algo-chip"><span class="algo-dot"></span> 2-opt local search</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Dijkstra matrix</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Capacity splitting</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-footer-left">
+            <span class="complexity">Heuristic routing · Capacity-aware tours</span>
+            <span class="tagline">Lower fuel, higher recycling efficiency.</span>
+          </div>
+          <div class="btn-row">
+            <a href="#case3-code" class="btn btn-primary">
+              <span class="btn-icon">🧠</span> View Code
+            </a>
+            <button class="btn btn-secondary">
+              <span class="btn-icon">🗺️</span> Route Plan
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 4 -->
+      <article
+        class="case-card"
+        data-domain="Water Purification & Environmental Cleaning"
+        data-tags="segment-tree,sparse-table,kmp,string,range,min,max,sensor"
+        data-groups="tree string"
+      >
+        <div class="case-meta">
+          <div class="case-label">
+            <span class="case-label-bullet"></span> Case 4
+          </div>
+          <div class="case-domain">Water Quality · Environment</div>
+        </div>
+        <h2 class="case-title">Water Purification & Environmental Cleaning</h2>
+        <p class="case-desc">
+          Water monitoring systems continuously process sensor readings from distributed
+          purification units, requiring fast anomaly detection and windowed analysis. Range
+          queries on time-series data identify sudden contamination, pressure spikes, or
+          filtration failures. Dynamic segments of sensor data require fast update/query
+          mechanics for min/max operations. Historical compliance checks leverage static
+          preprocessed structures to answer queries instantly. Document-based contamination
+          reports must be scanned for critical terms, requiring linear-time pattern detection.
+          Efficient data structures ensure the system responds in real time even as thousands of
+          readings per second enter the pipeline. Overall performance hinges on keeping both
+          update and query operations logarithmic or constant-time.
+        </p>
+        <button class="more-toggle">
+          Expand details <span class="more-toggle-icon">▾</span>
+        </button>
+        <div class="algo-chip-row">
+          <span class="algo-chip"><span class="algo-dot"></span> Segment Tree</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Sparse Table</span>
+          <span class="algo-chip"><span class="algo-dot"></span> KMP pattern matching</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Sorting (logs)</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-footer-left">
+            <span class="complexity">Real-time time-series queries</span>
+            <span class="tagline">Instant anomaly detection for clean water.</span>
+          </div>
+          <div class="btn-row">
+            <a href="#case4-code" class="btn btn-primary">
+              <span class="btn-icon">🧠</span> View Code
+            </a>
+            <button class="btn btn-secondary">
+              <span class="btn-icon">💧</span> Data Windows
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 5 -->
+      <article
+        class="case-card"
+        data-domain="Urban Farming & Organic Food Systems"
+        data-tags="fenwick,segment-tree,sorting,kmeans,agriculture,irrigation"
+        data-groups="tree clustering"
+      >
+        <div class="case-meta">
+          <div class="case-label">
+            <span class="case-label-bullet"></span> Case 5
+          </div>
+          <div class="case-domain">Urban Farming · Organic Food</div>
+        </div>
+        <h2 class="case-title">Urban Farming & Organic Food Systems</h2>
+        <p class="case-desc">
+          Urban farming generates large volumes of crop-growth, soil-quality, and irrigation
+          data that must be aggregated efficiently. Yield metrics across multiple rooftop or
+          vertical farms require fast rolling-sum and rolling-average calculations. Dynamic
+          updates occur whenever new sensor readings arrive, and these changes must propagate
+          across dependent systems instantly. Decisions about irrigation cycles, nutrient
+          delivery, and harvesting schedules rely on accurate range queries. For forecasting and
+          planning, cluster formation groups similar plots to coordinate resource allocation.
+          High-performing indexing structures allow responsive dashboards and near-real-time
+          adjustments to automated farming systems.
+        </p>
+        <button class="more-toggle">
+          Expand details <span class="more-toggle-icon">▾</span>
+        </button>
+        <div class="algo-chip-row">
+          <span class="algo-chip"><span class="algo-dot"></span> Fenwick Tree</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Segment Tree</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Sorting (priorities)</span>
+          <span class="algo-chip"><span class="algo-dot"></span> K-means clustering</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-footer-left">
+            <span class="complexity">Rolling aggregates · Zoned control</span>
+            <span class="tagline">Data-driven irrigation and harvesting.</span>
+          </div>
+          <div class="btn-row">
+            <a href="#case5-code" class="btn btn-primary">
+              <span class="btn-icon">🧠</span> View Code
+            </a>
+            <button class="btn btn-secondary">
+              <span class="btn-icon">🌱</span> Farm Zones
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 6 -->
+      <article
+        class="case-card"
+        data-domain="Green Landscaping & Ecological Restoration"
+        data-tags="graph,mst,bfs,dfs,greedy,sorting,restoration"
+        data-groups="graph greedy"
+      >
+        <div class="case-meta">
+          <div class="case-label">
+            <span class="case-label-bullet"></span> Case 6
+          </div>
+          <div class="case-domain">Landscaping · Ecological Corridors</div>
+        </div>
+        <h2 class="case-title">Green Landscaping & Ecological Restoration</h2>
+        <p class="case-desc">
+          Planning ecological corridors requires ensuring minimal-cost connectivity between
+          degraded green zones. Graph modeling helps identify critical patches and potential
+          pathways for restoration work. Minimum spanning trees provide cost-efficient backbone
+          networks for linking fragmented ecosystems. Connectivity analysis determines the
+          number of isolated green regions, guiding restoration priority. Resource allocation
+          requires choosing optimal planting packages based on benefit-to-cost evaluations.
+          Efficient selection requires sorting and greedy maximization under budget constraints.
+          This model scales to city-level green planning and enables real-time recomputation as
+          new ecological data arrives.
+        </p>
+        <button class="more-toggle">
+          Expand details <span class="more-toggle-icon">▾</span>
+        </button>
+        <div class="algo-chip-row">
+          <span class="algo-chip"><span class="algo-dot"></span> Kruskal MST</span>
+          <span class="algo-chip"><span class="algo-dot"></span> BFS / DFS components</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Greedy selection</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Sorting (benefit/cost)</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-footer-left">
+            <span class="complexity">Component analysis · Budgeted optimization</span>
+            <span class="tagline">Reconnecting fragmented green ecosystems.</span>
+          </div>
+          <div class="btn-row">
+            <a href="#case6-code" class="btn btn-primary">
+              <span class="btn-icon">🧠</span> View Code
+            </a>
+            <button class="btn btn-secondary">
+              <span class="btn-icon">🌳</span> Corridor Map
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 7 -->
+      <article
+        class="case-card"
+        data-domain="Drone-Based Environmental Monitoring"
+        data-tags="tsp,2opt,dijkstra,graph,battery,drone"
+        data-groups="graph"
+      >
+        <div class="case-meta">
+          <div class="case-label">
+            <span class="case-label-bullet"></span> Case 7
+          </div>
+          <div class="case-domain">Drones · Environmental Monitoring</div>
+        </div>
+        <h2 class="case-title">Drone-Based Environmental Monitoring</h2>
+        <p class="case-desc">
+          Drone fleets must cover large monitoring zones efficiently while respecting battery
+          limits, weather constraints, and mission objectives. Each waypoint is treated as a
+          graph node whose travel costs reflect distance and wind impact. Finding efficient tour
+          paths requires heuristic TSP construction refined with local optimization. If battery
+          levels restrict a full route, tours must be segmented into feasible missions.
+          Shortest-path computations allow the drone to return safely to base or reach the next
+          target under constraint changes. The system recalculates optimal flight paths
+          dynamically based on environmental data. Efficiency depends on combining
+          polynomial-time heuristics with graph shortest paths.
+        </p>
+        <button class="more-toggle">
+          Expand details <span class="more-toggle-icon">▾</span>
+        </button>
+        <div class="algo-chip-row">
+          <span class="algo-chip"><span class="algo-dot"></span> Nearest Neighbour TSP</span>
+          <span class="algo-chip"><span class="algo-dot"></span> 2-opt optimization</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Dijkstra</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Tour segmentation</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-footer-left">
+            <span class="complexity">Tour heuristics · Constraint-aware routing</span>
+            <span class="tagline">Max coverage per battery cycle.</span>
+          </div>
+          <div class="btn-row">
+            <a href="#case7-code" class="btn btn-primary">
+              <span class="btn-icon">🧠</span> View Code
+            </a>
+            <button class="btn btn-secondary">
+              <span class="btn-icon">🛰️</span> Flight Plan
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 8 -->
+      <article
+        class="case-card"
+        data-domain="Microgrid & Energy Storage Management"
+        data-tags="dijkstra,fenwick,bellman-ford,greedy,graph,storage"
+        data-groups="graph tree greedy"
+      >
+        <div class="case-meta">
+          <div class="case-label">
+            <span class="case-label-bullet"></span> Case 8
+          </div>
+          <div class="case-domain">Microgrids · Storage Scheduling</div>
+        </div>
+        <h2 class="case-title">Microgrid & Energy Storage Management</h2>
+        <p class="case-desc">
+          Microgrids coordinate distributed generators, batteries, and loads while minimizing
+          cost and avoiding outages. Power routing is modeled as graph traversal with weighted
+          edges representing loss and line capacity. Storage scheduling requires assigning
+          charge/discharge events during time intervals represented as indexed time slots. Fast
+          prefix and range queries evaluate whether supply meets demand at any point.
+          Optimization heuristics decide which battery to discharge during peak loads.
+          Negative-cost cycles, if present in price models, must be detected for profitable
+          arbitrage. The system maintains high performance across multiple-time-step
+          simulations.
+        </p>
+        <button class="more-toggle">
+          Expand details <span class="more-toggle-icon">▾</span>
+        </button>
+        <div class="algo-chip-row">
+          <span class="algo-chip"><span class="algo-dot"></span> Dijkstra</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Fenwick Tree</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Bellman–Ford</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Greedy load assignment</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-footer-left">
+            <span class="complexity">Time-series + graph hybrid model</span>
+            <span class="tagline">Stable microgrids with smart arbitrage.</span>
+          </div>
+          <div class="btn-row">
+            <a href="#case8-code" class="btn btn-primary">
+              <span class="btn-icon">🧠</span> View Code
+            </a>
+            <button class="btn btn-secondary">
+              <span class="btn-icon">⚡</span> Load Curves
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 9 -->
+      <article
+        class="case-card"
+        data-domain="Pollution Monitoring & Environmental Analytics"
+        data-tags="fenwick,segment-tree,sliding-window,sorting,analytics"
+        data-groups="tree"
+      >
+        <div class="case-meta">
+          <div class="case-label">
+            <span class="case-label-bullet"></span> Case 9
+          </div>
+          <div class="case-domain">Pollution · Analytics</div>
+        </div>
+        <h2 class="case-title">Pollution Monitoring & Environmental Analytics</h2>
+        <p class="case-desc">
+          Continuous pollution monitoring generates vast sensor streams requiring high-frequency
+          anomaly checks and historical trend analysis. Efficient data structures allow
+          immediate evaluation of min/max pollutant levels over any time range. Sliding-window
+          techniques detect outliers using statistical thresholds. Sorting identifies top
+          polluted locations, while graph-based neighborhood searches support clustering for
+          identifying hotspots. Static tables accelerate historical analysis of compliance
+          periods. System responsiveness depends on logarithmic update times and constant-time
+          query performance for window metrics.
+        </p>
+        <button class="more-toggle">
+          Expand details <span class="more-toggle-icon">▾</span>
+        </button>
+        <div class="algo-chip-row">
+          <span class="algo-chip"><span class="algo-dot"></span> Fenwick Tree</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Segment Tree</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Sliding window</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Sorting (hotspots)</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-footer-left">
+            <span class="complexity">High-frequency streaming analytics</span>
+            <span class="tagline">Real-time pollution hotspot detection.</span>
+          </div>
+          <div class="btn-row">
+            <a href="#case9-code" class="btn btn-primary">
+              <span class="btn-icon">🧠</span> View Code
+            </a>
+            <button class="btn btn-secondary">
+              <span class="btn-icon">🌫️</span> Heatmaps
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 10 -->
+      <article
+        class="case-card"
+        data-domain="Waste-to-Energy & Biofuel Optimization"
+        data-tags="greedy,knapsack,sorting,dijkstra,segment-tree,time-slot"
+        data-groups="greedy graph tree"
+      >
+        <div class="case-meta">
+          <div class="case-label">
+            <span class="case-label-bullet"></span> Case 10
+          </div>
+          <div class="case-domain">Waste-to-Energy · Biofuels</div>
+        </div>
+        <h2 class="case-title">Waste-to-Energy & Biofuel Optimization</h2>
+        <p class="case-desc">
+          Waste-to-energy plants must batch heterogeneous feedstock types to maximize calorific
+          value under digester capacity constraints. Greedy selection sorts waste items by
+          energy density to build near-optimal batches. Logistics surrounding feedstock
+          delivery use shortest paths to minimize transport cost. Plant scheduling simulates
+          multiple time slots, requiring efficient updates of occupancy and throughput values.
+          Range queries ensure no time slot exceeds digester load while maximizing daily
+          production. This model ensures sustainable conversion cycles with high throughput and
+          minimal operational cost.
+        </p>
+        <button class="more-toggle">
+          Expand details <span class="more-toggle-icon">▾</span>
+        </button>
+        <div class="algo-chip-row">
+          <span class="algo-chip"><span class="algo-dot"></span> Greedy knapsack approx</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Sorting by energy density</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Dijkstra (transport)</span>
+          <span class="algo-chip"><span class="algo-dot"></span> Segment Tree (time slots)</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-footer-left">
+            <span class="complexity">Knapsack-like batching · Time-slot control</span>
+            <span class="tagline">Maximum energy from heterogeneous waste.</span>
+          </div>
+          <div class="btn-row">
+            <a href="#case10-code" class="btn btn-primary">
+              <span class="btn-icon">🧠</span> View Code
+            </a>
+            <button class="btn btn-secondary">
+              <span class="btn-icon">🔥</span> Batch Planner
+            </button>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state" id="emptyState">
+      No case studies match <strong>your current filters</strong>. Try clearing the algorithm
+      filter or removing some keywords.
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const body = document.body;
+      const themeToggle = document.getElementById("themeToggle");
+      const themeLabel = document.getElementById("themeLabel");
+      const searchInput = document.getElementById("searchInput");
+      const pills = Array.from(document.querySelectorAll(".pill"));
+      const cards = Array.from(document.querySelectorAll(".case-card"));
+      const emptyState = document.getElementById("emptyState");
+
+      let activeGroup = "all";
+
+      // ---------------- Theme Toggle ----------------
+      function setTheme(light) {
+        if (light) {
+          body.classList.add("theme-light");
+          themeLabel.textContent = "Light mode · On";
+        } else {
+          body.classList.remove("theme-light");
+          themeLabel.textContent = "Dark mode · On";
+        }
+      }
+
+      themeToggle.addEventListener("click", () => {
+        const isLight = body.classList.toggle("theme-light");
+        if (isLight) {
+          themeLabel.textContent = "Light mode · On";
+        } else {
+          themeLabel.textContent = "Dark mode · On";
+        }
+      });
+
+      // ---------------- Card Reveal on Scroll ----------------
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.16 }
+      );
+      cards.forEach((card) => observer.observe(card));
+
+      // ---------------- Expand / Collapse Descriptions ----------------
+      document.addEventListener("click", (e) => {
+        const toggle = e.target.closest(".more-toggle");
+        if (toggle) {
+          const card = toggle.closest(".case-card");
+          const desc = card.querySelector(".case-desc");
+          const icon = toggle.querySelector(".more-toggle-icon");
+
+          const expanded = desc.classList.toggle("expanded");
+          toggle.classList.toggle("expanded", expanded);
+          toggle.firstChild.textContent = expanded ? "Collapse details " : "Expand details ";
+          if (icon) {
+            icon.textContent = expanded ? "▴" : "▾";
+          }
+        }
+      });
+
+      // ---------------- Filtering Logic ----------------
+      function applyFilters() {
+        const query = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const tags = (card.getAttribute("data-tags") || "").toLowerCase();
+          const domain = (card.getAttribute("data-domain") || "").toLowerCase();
+          const groups = (card.getAttribute("data-groups") || "").toLowerCase();
+          const textContent = (card.textContent || "").toLowerCase();
+
+          const matchesGroup =
+            activeGroup === "all" || groups.split(/\s+/).includes(activeGroup);
+          const matchesSearch =
+            !query ||
+            tags.includes(query) ||
+            domain.includes(query) ||
+            textContent.includes(query);
+
+          const visible = matchesGroup && matchesSearch;
+          card.style.display = visible ? "block" : "none";
+          if (visible) visibleCount++;
+        });
+
+        emptyState.style.display = visibleCount === 0 ? "block" : "none";
+      }
+
+      // Search input
+      searchInput.addEventListener("input", () => {
+        applyFilters();
+      });
+
+      // Algo pills
+      pills.forEach((pill) => {
+        pill.addEventListener("click", () => {
+          pills.forEach((p) => p.classList.remove("active"));
+          pill.classList.add("active");
+          activeGroup = pill.getAttribute("data-filter") || "all";
+          applyFilters();
+        });
+      });
+
+      // Initial filter
+      applyFilters();
+    })();
+  </script>
+</body>
+</html>
